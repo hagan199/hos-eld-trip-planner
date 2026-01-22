@@ -1,24 +1,24 @@
-# Trip Planner - Full Stack ELD & HOS System
+# HOS ELD Trip Planner
 
-A Django + React application for planning commercial truck trips while enforcing FMCSA Hours of Service (HOS) rules and generating ELD logs.
+A full-stack application that helps truck drivers plan trips
+according to FMCSA Hours of Service (HOS) regulations.
 
-## 📚 Documentation
+## Features
 
-- **[QUICKSTART.md](QUICKSTART.md)** - Instructions to run the project locally.
-- **[README_DEPLOY.md](README_DEPLOY.md)** - Deployment instructions (Vercel/Railway).
-- **[TESTING_GUIDE.md](TESTING_GUIDE.md)** - Verification steps and test scenarios.
-- **[API_CONTRACT.md](API_CONTRACT.md)** - API specification for the backend.
-- **[architecture.md](architecture.md)** - System design and component overview.
+- Trip planning with HOS limits
+- Driving / on-duty / off-duty tracking
+- 11-hour driving rule
+- 14-hour duty window
+- 30-minute break rule
+- 60/70-hour cycle tracking
 
-## 🏗 Project Structure
+## Tech Stack
 
-- `backend/` - Django Rest Framework application.
-- `frontend/` - React + Vite application.
-- `ASSESSMENT.md` - Original assessment requirements and rubric.
+- Frontend: React / Vite
+- Backend: Node.js / Django / Laravel
+- Database: PostgreSQL
+- Deployment: Vercel + Docker
 
-## ✨ Features
+## Setup
 
-- **Route Planning**: Calculates optimal truck routes using OSRM.
-- **HOS Compliance**: Enforces 11/14/70 rules and 30-minute breaks.
-- **ELD Logs**: Generates compliant daily log grids.
-- **Visualization**: Interactive map with route segments and stops.
+docker-compose up --build
