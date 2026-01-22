@@ -26,18 +26,18 @@ A full-stack application that helps truck drivers plan routes that comply with F
 
 1. Copy the backend environment example and adjust values as needed:
 
-	```bash
-	cp backend/.env.example backend/.env
-	```
+   ```bash
+   cp backend/.env.example backend/.env
+   ```
 
 2. Start the stack with Docker Compose:
 
-	```bash
-	docker-compose up --build
-	```
+   ```bash
+   docker-compose up --build
+   ```
 
-	- Frontend: http://localhost:5173
-	- Backend API: http://localhost:8000 (health check at /healthz)
+   - Frontend: http://localhost:5173
+   - Backend API: http://localhost:8000 (health check at /healthz)
 
 3. To run outside Docker, install dependencies and run each service from the frontend and backend folders (`npm install && npm run dev`, `pip install -r requirements.txt && python manage.py runserver`).
 
