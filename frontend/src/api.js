@@ -1,6 +1,4 @@
-const API_BASE =
-  import.meta.env.VITE_API_BASE ||
-  (import.meta.env.PROD ? "" : "http://localhost:8000");
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
 export async function planTrip(payload) {
   const res = await fetch(`${API_BASE}/api/trips/plan`, {
