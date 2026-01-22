@@ -1,24 +1,30 @@
-const API_BASE = import.meta.env.VITE_API_BASE_URL;
+const rawApiBase = import.meta.env.VITE_API_BASE_URL?.trim();
+const devDefaultBase = "http://localhost:8000";
+const configuredBase = rawApiBase ? rawApiBase.replace(/\/$/, "") : undefined;
 
-// Debugging logs to help identify environment issues
-console.log("Environment check:", {
-  MODE: import.meta.env.MODE,
-  HAS_API_URL: !!API_BASE,
-});
+function resolveApiBase() {
+  if (configuredBase) {
+    return configuredBase;
+  }
 
-if (!API_BASE) {
-  console.error(
-    "CRITICAL ERROR: VITE_API_BASE_URL is not defined used on Vercel. Requests will fail.",
-  );
+  if (import.meta.env.DEV) {
+    return devDefaultBase;
+  }
+
+  const message =
+    "Trip Planner API is not configured. Please redeploy with VITE_API_BASE_URL set.";
+  console.error(message);
+  throw new Error(message);
 }
 
-// Ensure no trailing slash to prevent double slashes (e.g. .com//api)
-const cleanBase = (API_BASE || "http://localhost:8000").replace(/\/$/, "");
-
 export async function planTrip(payload) {
-  console.log(`Sending request to: ${cleanBase}/api/trips/plan`);
+  const apiBase = resolveApiBase();
 
-  const res = await fetch(`${cleanBase}/api/trips/plan`, {
+  if (import.meta.env.DEV) {
+    console.info(`Dispatching trip plan request to ${apiBase}/api/trips/plan`);
+  }
+
+  const res = await fetch(`${apiBase}/api/trips/plan`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),

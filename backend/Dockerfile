@@ -18,5 +18,9 @@ COPY . /app/
 # Expose port (optional, but fine)
 EXPOSE 8000
 
-# Run server on Render's assigned port (docker-compose up --buildor default to 8000 locally)
-CMD ["sh", "-c", "python manage.py collectstatic --noinput && python manage.py migrate && python manage.py runserver 0.0.0.0:${PORT:-8000}"]
+# Run migrations, collect static assets, then serve with Gunicorn
+CMD [
+	"sh",
+	"-c",
+	"python manage.py migrate --noinput && python manage.py collectstatic --noinput && gunicorn core.wsgi:application --bind 0.0.0.0:${PORT:-8000}"
+]

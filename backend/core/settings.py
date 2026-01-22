@@ -18,7 +18,12 @@ SECRET_KEY = os.environ.get(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "*").split(",")
+DEFAULT_ALLOWED_HOSTS = ".onrender.com,.vercel.app,localhost,127.0.0.1"
+ALLOWED_HOSTS = [
+    host.strip()
+    for host in os.environ.get("ALLOWED_HOSTS", DEFAULT_ALLOWED_HOSTS).split(",")
+    if host.strip()
+]
 
 
 # Application definition
@@ -112,8 +117,21 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# CORS Settings - Allow all origins for this assessment project
-CORS_ALLOW_ALL_ORIGINS = True
+# CORS Settings
+_DEFAULT_CORS_ORIGINS = [
+    "http://localhost:5173",
+    "https://hos-eld-trip-planner-o5e92ycc8-emmanuel-hagans-projects.vercel.app",
+]
+
+_raw_cors_origins = os.environ.get("CORS_ALLOWED_ORIGINS")
+if _raw_cors_origins:
+    CORS_ALLOWED_ORIGINS = [
+        origin.strip() for origin in _raw_cors_origins.split(",") if origin.strip()
+    ]
+else:
+    CORS_ALLOWED_ORIGINS = _DEFAULT_CORS_ORIGINS
+
+CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_METHODS = [
     "DELETE",
