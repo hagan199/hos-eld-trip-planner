@@ -1,7 +1,15 @@
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
+if (!API_BASE) {
+  console.error(
+    "CRITICAL ERROR: VITE_API_BASE_URL is not defined. Only localhost will be tried.",
+  );
+}
+
+const BASE_URL = API_BASE || "http://localhost:8000";
+
 export async function planTrip(payload) {
-  const res = await fetch(`${API_BASE}/api/trips/plan`, {
+  const res = await fetch(`${BASE_URL}/api/trips/plan`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
