@@ -9,7 +9,18 @@ def health(request):
     return JsonResponse({"ok": True})
 
 
+def home(request):
+    return JsonResponse(
+        {
+            "service": "HOS ELD Trip Planner API",
+            "status": "online",
+            "documentation": "/api/docs/",
+        }
+    )
+
+
 urlpatterns = [
+    path("", home),
     path("healthz", health),
     path("", include("app.urls")),
     # OpenAPI schema and Swagger UI
